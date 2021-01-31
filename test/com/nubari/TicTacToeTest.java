@@ -51,10 +51,10 @@ class TicTacToeTest {
     @Test
     void testGamePlayerCanPlaceAValueOnTheBoard() {
         game.makeMove(3);
-        // assertEquals(GameValue.X, game.getBoard().getGrid()[0][2]);
+        assertEquals(GameValue.X, game.getBoard().getGrid()[0][2]);
         game.makeMove(5);
-        //
-        // assertEquals(GameValue.O, game.getBoard().getGrid()[1][1]);
+
+        assertEquals(GameValue.O, game.getBoard().getGrid()[1][1]);
     }
 
     @Test
@@ -67,6 +67,21 @@ class TicTacToeTest {
 
     @Test
     void testGamePlayerCanOnlyPlayOnAnEmptySquare() {
+        assertEquals(1, game.makeMove(3));
+        assertEquals(-1, game.makeMove(3));
+        assertEquals(1, game.makeMove(6));
+        assertEquals(-1, game.makeMove(6));
+        assertEquals(-1, game.makeMove(3));
+        assertEquals(1, game.makeMove(7));
+    }
 
+    @Test
+    void testGameThrowsIllegalArgumentExceptionWhenUserPassesInOutOfRangeGridPosition() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            game.makeMove(17);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            game.makeMove(10);
+        });
     }
 }
