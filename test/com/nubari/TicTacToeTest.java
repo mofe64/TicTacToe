@@ -19,6 +19,8 @@ class TicTacToeTest {
 
     @AfterEach
     void tearDown() {
+        board = null;
+        game = null;
     }
 
     @Test
@@ -49,7 +51,7 @@ class TicTacToeTest {
     }
 
     @Test
-    void testGamePlayerCanPlaceAValueOnTheBoard() {
+    void testGamePlayerCanPlaceAValueOnTheBoard() throws GameOverException {
         game.makeMove(3);
         assertEquals(GameValue.X, game.getBoard().getGrid()[0][2]);
         game.makeMove(5);
@@ -58,15 +60,19 @@ class TicTacToeTest {
     }
 
     @Test
-    void testGamePlayersCannotPlayTwoConsecutiveXValues() {
+    void testGamePlayersCannotPlayTwoConsecutiveXValues() throws GameOverException {
         game.makeMove(3);
         assertEquals(GameValue.X, game.getBoard().getGrid()[0][2]);
         game.makeMove(5);
         assertNotEquals(GameValue.X, game.getBoard().getGrid()[1][1]);
+        game.makeMove(1);
+        assertEquals(GameValue.X, game.getBoard().getGrid()[0][0]);
+        game.makeMove(2);
+        assertEquals(GameValue.O, game.getBoard().getGrid()[0][1]);
     }
 
     @Test
-    void testGamePlayerCanOnlyPlayOnAnEmptySquare() {
+    void testGamePlayerCanOnlyPlayOnAnEmptySquare() throws GameOverException {
         assertEquals(1, game.makeMove(3));
         assertEquals(-1, game.makeMove(3));
         assertEquals(1, game.makeMove(6));
@@ -83,5 +89,110 @@ class TicTacToeTest {
         assertThrows(IllegalArgumentException.class, () -> {
             game.makeMove(10);
         });
+    }
+
+    @Test
+    void testGameThrowsGameOverExceptionWhenAllSlotsOnGridAreFull() throws GameOverException {
+        game.makeMove(1);
+        game.makeMove(2);
+        game.makeMove(3);
+        game.makeMove(4);
+        game.makeMove(5);
+        game.makeMove(6);
+        game.makeMove(7);
+        game.makeMove(8);
+        game.makeMove(9);
+        assertThrows(GameOverException.class, () -> {
+            game.makeMove(9);
+        });
+    }
+
+    @Test
+    void testGameResetsGameValues() throws GameOverException {
+        Board oldBoard = game.getBoard();
+        game.makeMove(1);
+        game.makeMove(4);
+        game.makeMove(2);
+        game.makeMove(5);
+        game.makeMove(3);
+        assertTrue(game.checkIfGameWon());
+        game.resetGame();
+        assertFalse(game.checkIfGameWon());
+        assertNotEquals(oldBoard, game.getBoard());
+        assertEquals(oldBoard.getGrid().length, game.getBoard().getGrid().length);
+    }
+
+    @Test
+    void testGameWonIfPlayerMakesHorizontalLineXValues() throws GameOverException {
+        game.makeMove(1);
+        game.makeMove(4);
+        game.makeMove(2);
+        game.makeMove(5);
+        game.makeMove(3);
+        game.displayBoard();
+        assertTrue(game.checkIfGameWon());
+        game.resetGame();
+        game.makeMove(4);
+        game.makeMove(2);
+        game.makeMove(5);
+        game.makeMove(3);
+        game.makeMove(6);
+        assertTrue(game.checkIfGameWon());
+        game.resetGame();
+        game.makeMove(7);
+        game.makeMove(2);
+        game.makeMove(8);
+        game.makeMove(1);
+        game.makeMove(9);
+        assertTrue(game.checkIfGameWon());
+    }
+
+    @Test
+    void testGameWonIfPlayerMakesVerticalLineValuesXValues() throws GameOverException {
+        game.makeMove(1);
+        game.makeMove(5);
+        game.makeMove(4);
+        game.makeMove(9);
+        game.makeMove(7);
+        assertTrue(game.checkIfGameWon());
+        game.resetGame();
+        assertFalse(game.checkIfGameWon());
+        game.makeMove(2);
+        game.makeMove(3);
+        game.makeMove(5);
+        game.makeMove(4);
+        game.makeMove(8);
+        assertTrue(game.checkIfGameWon());
+        game.resetGame();
+        assertFalse(game.checkIfGameWon());
+        game.makeMove(3);
+        game.makeMove(1);
+        game.makeMove(6);
+        game.makeMove(2);
+        game.makeMove(9);
+        assertTrue(game.checkIfGameWon());
+    }
+
+    @Test
+    void testGameCanDisplayBoard() throws GameOverException {
+        game.makeMove(1);
+        game.makeMove(2);
+        game.makeMove(3);
+        game.makeMove(4);
+        game.makeMove(5);
+        game.makeMove(6);
+        game.makeMove(7);
+        game.makeMove(8);
+        game.makeMove(9);
+        game.displayBoard();
+    }
+    @Test
+    void testGameDiagonal() throws GameOverException {
+        game.makeMove(7);
+        game.makeMove(1);
+        game.makeMove(5);
+        game.makeMove(2);
+        game.makeMove(3);
+        assertTrue(game.checkIfGameWon());
     }
 }

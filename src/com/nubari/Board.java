@@ -13,8 +13,16 @@ public class Board {
 
     }
 
-
     public GameValue[][] getGrid() {
         return grid;
+    }
+
+    public void displayBoard() {
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid[row].length; column++) {
+                System.out.print(grid[row][column] + " ");
+            }
+            System.out.println();
+        }
     }
 }
