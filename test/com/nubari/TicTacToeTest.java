@@ -43,9 +43,9 @@ class TicTacToeTest {
     void testGameBoardIsEmptyWhenInitialized() {
         Board gameBoard = game.getBoard();
         GameValue[][] grid = gameBoard.getGrid();
-        for (int row = 0; row < grid.length; row++) {
-            for (int column = 0; column < grid[row].length; column++) {
-                assertEquals(GameValue.EMPTY, grid[row][column]);
+        for (GameValue[] gameValues : grid) {
+            for (GameValue gameValue : gameValues) {
+                assertEquals(GameValue.EMPTY, gameValue);
             }
         }
     }
@@ -82,12 +82,8 @@ class TicTacToeTest {
 
     @Test
     void testGameThrowsIllegalArgumentExceptionWhenUserPassesInOutOfRangeGridPosition() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.makeMove(17);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.makeMove(10);
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.makeMove(17));
+        assertThrows(IllegalArgumentException.class, () -> game.makeMove(10));
     }
 
     @Test
@@ -101,9 +97,7 @@ class TicTacToeTest {
         game.makeMove(7);
         game.makeMove(8);
         game.makeMove(9);
-        assertThrows(GameOverException.class, () -> {
-            game.makeMove(9);
-        });
+        assertThrows(GameOverException.class, () -> game.makeMove(9));
     }
 
     @Test

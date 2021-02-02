@@ -1,6 +1,7 @@
 package com.nubari;
 
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -72,18 +73,14 @@ public class TicTacToe {
     public void checkHorizontalValuesForWinningPlay() {
         //System.out.println("GameWon " + gameWon);
         GameValue[][] grid = gameBoard.getGrid();
-        for (int row = 0; row < grid.length; row++) {
-            Set<GameValue> values = new HashSet<>();
-            for (int column = 0; column < grid[row].length; column++) {
-                values.add(grid[row][column]);
-            }
+        for (GameValue[] gameValues : grid) {
+            Set<GameValue> values = new HashSet<>(Arrays.asList(gameValues));
             if (!values.contains(GameValue.EMPTY)) {
                 if (values.size() == 1) {
                     this.gameWon = true;
                     return;
                 }
             }
-
         }
     }
 
@@ -122,7 +119,7 @@ public class TicTacToe {
             rowNumber += 1;
         }
         if (flag) {
-            gameWon = flag;
+            gameWon = true;
 
         }
     }
@@ -142,7 +139,7 @@ public class TicTacToe {
             columnNumber += 1;
         }
         if (flag) {
-            gameWon = flag;
+            gameWon = true;
         }
     }
 
