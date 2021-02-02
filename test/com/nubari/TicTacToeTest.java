@@ -55,7 +55,6 @@ class TicTacToeTest {
         game.makeMove(3);
         assertEquals(GameValue.X, game.getBoard().getGrid()[0][2]);
         game.makeMove(5);
-
         assertEquals(GameValue.O, game.getBoard().getGrid()[1][1]);
     }
 

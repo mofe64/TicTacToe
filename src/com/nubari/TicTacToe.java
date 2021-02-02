@@ -72,11 +72,8 @@ public class TicTacToe {
     public void checkHorizontalValuesForWinningPlay() {
         //System.out.println("GameWon " + gameWon);
         GameValue[][] grid = gameBoard.getGrid();
-//        int columnNumber = 0;
         for (int row = 0; row < grid.length; row++) {
             Set<GameValue> values = new HashSet<>();
-//            GameValue firstValue = grid[row][columnNumber];
-//            values.add(firstValue);
             for (int column = 0; column < grid[row].length; column++) {
                 values.add(grid[row][column]);
             }
@@ -92,25 +89,6 @@ public class TicTacToe {
 
     private void checkVerticalValuesForWinningPlay() {
         GameValue[][] grid = gameBoard.getGrid();
-//        boolean flag = true;
-//        int rowNumber = 0;
-//        int columnNumber = 0;
-//        GameValue firstValue = grid[rowNumber][columnNumber];
-//        for (int row = 0; row < grid.length; row++) {
-//            rowNumber = 0;
-//            for (int column = 0; column < grid[row].length; column++) {
-//                if (!firstValue.equals(grid[rowNumber][columnNumber]) || grid[rowNumber][columnNumber] == GameValue.EMPTY) {
-//                    flag = false;
-//                }
-//                if (rowNumber < 2) {
-//                    rowNumber++;
-//                }
-//            }
-//            columnNumber += 1;
-//        }
-//        if (flag) {
-//            gameWon = true;
-//        }
         int columnNumber = 0;
         for (int counter = 0; counter < grid.length; counter++) {
             Set<GameValue> values = new HashSet<>();
